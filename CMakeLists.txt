@@ -11,5 +11,4 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--no-entry,--allow-undefined,--expor
 
 include_directories(beam/bvm)
 add_subdirectory(shaderlib)
-add_subdirectory(TestShader)
-add_subdirectory(TestSTLShader)
+add_subdirectory(samples)
