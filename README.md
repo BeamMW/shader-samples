@@ -1,4 +1,4 @@
-# Shader samples
+# Shader SDK (work in progress)
 This repository contains the samples of developement of shaders for Beam.
 The aim of it is to make shaders developement more comfotable, at least for C++ developers. These samples use `wasi-sdk` which is based on `llvm libcxx`.
 `shaderlib` folder contains a small piece of code to link standard C/C++ functions to Beam Virtual Machine calls. All samples should depend on `shaderlib`.
