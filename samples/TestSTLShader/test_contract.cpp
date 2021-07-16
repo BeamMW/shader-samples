@@ -8,7 +8,7 @@
 #include <numeric>
 
 
-export void Ctor(void*)
+BEAM_EXPORT void Ctor(void*)
 {
     std::vector<uint32_t> v(100);
     std::iota(v.begin(), v.end(), 90);
@@ -26,12 +26,12 @@ export void Ctor(void*)
     }
 }
 
-export void Dtor(void*)
+BEAM_EXPORT void Dtor(void*)
 {
  
 }
 
-export void Method_2(const void*)
+BEAM_EXPORT void Method_2(const void*)
 {
 
 }

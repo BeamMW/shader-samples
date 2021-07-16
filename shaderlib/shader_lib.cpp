@@ -41,7 +41,16 @@ void operator delete(void* ptr, std::align_val_t) noexcept
 {
     Env::Heap_Free(ptr);
 }
-
+//
+//extern "C" void* malloc(size_t size)
+//{
+//    return Env::Heap_Alloc(size);
+//}
+//
+//extern "C" void free(void* ptr)
+//{
+//    Env::Heap_Free(ptr);
+//}
 
 extern "C" size_t strlen(const char* s)
 {
