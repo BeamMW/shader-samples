@@ -25,3 +25,10 @@ cmake -G "Ninja"
     add_subdirectory(<Your shader folder>)
 ```
 * Please, enjoy and let me know about any problems:)
+
+# Learn about shaders
+* [Overview](https://github.com/BeamMW/shader-sdk/wiki/Beam-Confidential-DeFi-Platform)
+* [Introducing Beam Shaders](https://github.com/BeamMW/shader-sdk/wiki/Beam-Smart-Contracts)
+* [Building Shaders](https://github.com/BeamMW/shader-sdk/wiki/Building-Beam-Shaders)
+* [Running Shaders using CLI wallet](https://github.com/BeamMW/shader-sdk/wiki/Running-Beam-Shaders-using-CLI-Wallet)
+* [API](https://github.com/BeamMW/shader-sdk/wiki/BVM-functions-for-shaders)
