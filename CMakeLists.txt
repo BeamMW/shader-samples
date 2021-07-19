@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.18)
 
+project(beam-shader-sdk)
+
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/beam/cmake" ${CMAKE_MODULE_PATH})
+
 
 set(CMAKE_EXECUTABLE_SUFFIX .wasm)
 
