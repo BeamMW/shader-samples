@@ -12,19 +12,19 @@ contract_name = sys.argv[1]
 shader_name = contract_name + 'Shader'
 
 try:
-    os.mkdir('shaders/%s' % shader_name)
+    os.mkdir(os.path.join('shaders', shader_name))
 except FileExistsError:
     print('Error: Contract %s already exists!' % contract_name)
     sys.exit(1)
 
-with open('shaders/CMakeLists.txt', 'a') as f:
+with open(os.path.join('shaders', 'CMakeLists.txt'), 'a') as f:
     f.write('add_subdirectory(%s)\n' % shader_name)
 
-for i in os.listdir('samples/Initial'):
-    f = open('samples/Initial/%s' % i, 'r')
+for i in os.listdir(os.path.join('samples', 'Initial')):
+    f = open(os.path.join('samples', 'Initial', i), 'r')
     txt = f.read()
     f.close()
-    f = open('shaders/%s/%s' % (shader_name, i), 'w')
+    f = open(os.path.join('shaders', shader_name, i), 'w')
     f.write(txt.replace('_INITIAL_CONTRACT_', contract_name))
     f.close()
 
