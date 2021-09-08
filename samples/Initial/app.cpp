@@ -5,10 +5,11 @@
 #include <algorithm>
 #include <vector>
 #include <utility>
+#include <string_view>
 
 using Action_func_t = void (*)(const ContractID&);
-using Actions_map_t = std::vector<std::pair<const char *, Action_func_t>>;
-using Roles_map_t = std::vector<std::pair<const char *, const Actions_map_t&>>;
+using Actions_map_t = std::vector<std::pair<std::string_view, Action_func_t>>;
+using Roles_map_t = std::vector<std::pair<std::string_view, const Actions_map_t&>>;
 
 constexpr size_t ACTION_BUF_SIZE = 32;
 constexpr size_t ROLE_BUF_SIZE = 16;
@@ -22,9 +23,9 @@ void On_error(const char* msg)
 }
 
 template <typename T>
-auto find_if_contains(const char* str, const std::vector<std::pair<const char *, T>>& v) {
+auto find_if_contains(const std::string_view str, const std::vector<std::pair<std::string_view, T>>& v) {
 	return std::find_if(v.begin(), v.end(), [&str](const auto& p) {
-		return !strcmp(str, p.first);
+		return str == p.first;
 	});
 }
 
