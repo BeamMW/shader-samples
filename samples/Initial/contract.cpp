@@ -12,3 +12,8 @@ BEAM_EXPORT void Dtor(void*)
 {
 	Env::DelVar_T(0);
 }
+
+BEAM_EXPORT void Method_2(void*)
+{
+
+}
