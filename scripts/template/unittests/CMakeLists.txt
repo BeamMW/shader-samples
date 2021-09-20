@@ -5,9 +5,9 @@ target_include_directories(shader_test PUBLIC ${PROJECT_SOURCE_DIR}/shaders)
 
 
 build_target(contract)
-build_target(contract_header)
+generate_sid_for_file(contract ${PROJECT_BINARY_DIR}/shaders/shaders ${PROJECT_SOURCE_DIR}/shaders)
 build_target(app)
 
 
-add_dependencies(shader_test contract_header_build)
-add_dependencies(app_build contract_header_build)
+add_dependencies(shader_test contract_header)
+add_dependencies(app_build contract_header)

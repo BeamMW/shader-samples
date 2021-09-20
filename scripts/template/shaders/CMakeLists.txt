@@ -7,4 +7,4 @@ add_executable(app app.cpp)
 target_link_libraries(contract PRIVATE Beam::shader-lib)
 target_link_libraries(app PRIVATE Beam::shader-lib)
 
-generate_sid_header(contract)
+generate_sid(contract)

@@ -25,6 +25,9 @@ else()
     set(BEAM_WALLET_CLIENT_LIBRARY TRUE)
     set(BEAM_TESTS_ENABLED FALSE) 
     add_subdirectory(beam)
+
+    # export beam targets to be able to use them from another folder
+    # TODO: should be replaced with installation of the beam library
     export(
         TARGETS
             beam

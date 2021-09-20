@@ -12,8 +12,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(${BEAM_SHADER_SDK}/beam/bvm)
 message(STATUS "CMAKE_SYSTEM_NAME=${CMAKE_SYSTEM_NAME}")
+include(ShaderTools)
+
 if(CMAKE_SYSTEM_NAME MATCHES "WASI")
-    include(GenerateSID)
+    #include(GenerateSID)
 
     include(ShaderLib)
 
