@@ -3,8 +3,7 @@
 #include <cstddef>
 
 namespace tester {
-	// SID: 
-	static const ShaderID s_SID = {};
+#include "contract_sid.i"
 
 #pragma pack(push, 1)
 
