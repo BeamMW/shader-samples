@@ -17,7 +17,7 @@ if (CMAKE_SYSTEM_NAME MATCHES "WASI")
 
     include_directories(beam/bvm)
     add_subdirectory(shaderlib)
-    add_subdirectory(samples)
+	#add_subdirectory(samples)
     add_subdirectory(shaders)
 else()
     set(BEAM_BVM_ONLY TRUE)
