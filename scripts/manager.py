@@ -10,7 +10,12 @@ import sys
 os.environ['SHADER_SDK_BASE_DIR'] = str(pathlib.Path(__file__).parent.parent.absolute())
 os.environ['PLATFORM_NAME'] = platform.system()
 os.environ['CMAKE_EXECUTABLE'] = shutil.which('cmake')
-os.environ['WASI_PATH'] = os.path.join(os.environ['SHADER_SDK_BASE_DIR'], [s for s in os.listdir(os.environ['SHADER_SDK_BASE_DIR']) if s.startswith('wasi-sdk')][0])
+os.environ['GIT_EXECUTABLE'] = shutil.which('git')
+
+try:
+    os.environ['WASI_PATH'] = os.path.join(os.environ['SHADER_SDK_BASE_DIR'], [s for s in os.listdir(os.environ['SHADER_SDK_BASE_DIR']) if s.startswith('wasi-sdk')][0])
+except IndexError:
+    logging.warning('WASI_PATH variable was not loaded')
 
 logging.getLogger().setLevel(logging.INFO)
 
