@@ -12,6 +12,7 @@ class Command():
         PLATFORM_NAME = os.environ['PLATFORM_NAME']
         SHADER_SDK_BASE_DIR = os.environ['SHADER_SDK_BASE_DIR']
         CMAKE_EXECUTABLE = os.environ['CMAKE_EXECUTABLE']
+        GIT_EXECUTABLE = os.environ['GIT_EXECUTABLE']
 
         if PLATFORM_NAME == 'Linux':
             wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-linux.tar.gz'
@@ -26,6 +27,7 @@ class Command():
         logging.info('Platform: %s' % PLATFORM_NAME)
         logging.info('Beam shader-sdk path: %s' % SHADER_SDK_BASE_DIR)
         logging.info('CMake executable: %s' % CMAKE_EXECUTABLE)
+        logging.info('Git executable: %s' % GIT_EXECUTABLE)
         logging.info('Downloading wasi-sdk from %s' % wasi_url)
 
         r = requests.get(wasi_url)
@@ -38,7 +40,12 @@ class Command():
 
         WASI_PATH = os.path.join(SHADER_SDK_BASE_DIR, [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')][0])
 
-        logging.info('Wasi path: %s' % os.environ['WASI_PATH')
+        logging.info('Wasi path: %s' % WASI_PATH)
+
+        git_submodule_update_cmd = [GIT_EXECUTABLE,
+                '-C', SHADER_SDK_BASE_DIR,
+                'submodule', 'update',
+                '--init', '--recursive']
 
         cmake_init_cmd = [CMAKE_EXECUTABLE,
                 '-DCMAKE_INSTALL_PREFIX=' + SHADER_SDK_BASE_DIR,
@@ -65,6 +72,12 @@ class Command():
                 '-B' + SHADER_SDK_BASE_DIR,
                 SHADER_SDK_BASE_DIR]
 
+        try:
+            os.remove(os.path.join(SHADER_SDK_BASE_DIR, 'CMakeCache.txt'))
+        except FileNotFoundError:
+            pass 
+
+        subprocess.run(git_submodule_update_cmd)
         subprocess.run(cmake_init_cmd)
         subprocess.run(cmake_build_cmd)
         subprocess.run(cmake_install_cmd)
