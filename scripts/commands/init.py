@@ -38,6 +38,8 @@ class Command():
         logging.info('Unpacking wasi-sdk to %s' % SHADER_SDK_BASE_DIR)
         shutil.unpack_archive('wasi-sdk.tar.gz', SHADER_SDK_BASE_DIR)
 
+        os.remove('wasi-sdk.tar.gz')
+
         WASI_PATH = os.path.join(SHADER_SDK_BASE_DIR, [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')][0])
 
         logging.info('Wasi path: %s' % WASI_PATH)
