@@ -1,0 +1,1 @@
+call python "%~dp0scripts\manager.py" %*

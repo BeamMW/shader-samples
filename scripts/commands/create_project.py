@@ -30,16 +30,16 @@ class Command():
                 PROJECT_NAME]
 
         cmake_wasi_cmd = [CMAKE_EXECUTABLE,
+                '-G "Ninja"',
                 '-DCMAKE_BUILD_TYPE=Release',
-                '-DBEAM_SHADER_SDK=' + os.environ['SHADER_SDK_BASE_DIR'],
-                '-DCMAKE_TOOLCHAIN_FILE=' + os.path.join(os.environ['WASI_PATH'], 'share', 'cmake', 'wasi-sdk.cmake'),
-                '-DCMAKE_SYSROOT=' + os.path.join(os.environ['WASI_PATH'], 'share', 'wasi-sysroot'),
-                '-DWASI_SDK_PREFIX=' + os.environ['WASI_PATH'],
+                '-DBEAM_SHADER_SDK=' + os.environ['SHADER_SDK_BASE_DIR'].replace("\\", "/"),
+                '-DCMAKE_TOOLCHAIN_FILE=' + os.path.join(os.environ['WASI_PATH'], 'share', 'cmake', 'wasi-sdk.cmake').replace("\\", "/"),
+                '-DCMAKE_SYSROOT=' + os.path.join(os.environ['WASI_PATH'], 'share', 'wasi-sysroot').replace("\\", "/"),
+                '-DWASI_SDK_PREFIX=' + os.environ['WASI_PATH'].replace("\\", "/"),
                 '-DCMAKE_CXX_COMPILER_FORCED=True',
                 '-DCMAKE_C_COMPILER_FORCED=True',
                 '-S' + PROJECT_NAME,
-                '-B' + PROJECT_NAME,
-                PROJECT_NAME]
+                '-B' + PROJECT_NAME]
 
-        subprocess.run(cmake_wasi_cmd)
+        subprocess.run(cmake_wasi_cmd, shell=True, check=True)
         subprocess.run(cmake_build_cmd)

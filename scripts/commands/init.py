@@ -10,7 +10,7 @@ class Command():
         logging.getLogger().setLevel(logging.INFO)
 
         PLATFORM_NAME = os.environ['PLATFORM_NAME']
-        SHADER_SDK_BASE_DIR = os.environ['SHADER_SDK_BASE_DIR']
+        SHADER_SDK_BASE_DIR = os.environ['SHADER_SDK_BASE_DIR'].replace("\\", "/")
         CMAKE_EXECUTABLE = os.environ['CMAKE_EXECUTABLE']
         GIT_EXECUTABLE = os.environ['GIT_EXECUTABLE']
 
@@ -40,9 +40,13 @@ class Command():
 
         os.remove('wasi-sdk.tar.gz')
 
-        WASI_PATH = os.path.join(SHADER_SDK_BASE_DIR, [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')][0])
+        WASI_PATH = os.path.join(SHADER_SDK_BASE_DIR, [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')][0]).replace("\\", "/")
 
         logging.info('Wasi path: %s' % WASI_PATH)
+
+        BUILD_PATH = os.path.join(SHADER_SDK_BASE_DIR, 'build')
+        HOST_BUILD_PATH = os.path.join(BUILD_PATH, 'host')
+        WASI_BUILD_PATH = os.path.join(BUILD_PATH, 'wasi')
 
         git_submodule_update_cmd = [GIT_EXECUTABLE,
                 '-C', SHADER_SDK_BASE_DIR,
@@ -50,19 +54,23 @@ class Command():
                 '--init', '--recursive']
 
         cmake_init_cmd = [CMAKE_EXECUTABLE,
+                'CMAKE_BUILD_TYPE=Release',
                 '-DCMAKE_INSTALL_PREFIX=' + SHADER_SDK_BASE_DIR,
                 '-S' + SHADER_SDK_BASE_DIR,
-                '-B' + SHADER_SDK_BASE_DIR,
-                SHADER_SDK_BASE_DIR]
+                '-B' + HOST_BUILD_PATH]
 
         cmake_build_cmd = [CMAKE_EXECUTABLE,
-                '--build',
-                SHADER_SDK_BASE_DIR]
+                '--build', HOST_BUILD_PATH,
+                '--config', 'Release',
+                '--target', 'generate-sid',
+                '--parallel'
+                ]
 
         cmake_install_cmd = [CMAKE_EXECUTABLE,
                 '--install',
-                SHADER_SDK_BASE_DIR]
+                HOST_BUILD_PATH]
 
+        
         cmake_wasi_cmd = [CMAKE_EXECUTABLE,
                 '-DCMAKE_BUILD_TYPE=Release',
                 '-DCMAKE_TOOLCHAIN_FILE=' + os.path.join(WASI_PATH, 'share', 'cmake', 'wasi-sdk.cmake'),
@@ -71,22 +79,25 @@ class Command():
                 '-DCMAKE_CXX_COMPILER_FORCED=True',
                 '-DCMAKE_C_COMPILER_FORCED=True',
                 '-S' + SHADER_SDK_BASE_DIR,
-                '-B' + SHADER_SDK_BASE_DIR,
-                SHADER_SDK_BASE_DIR]
+                '-B' + WASI_BUILD_PATH]
 
-        try:
-            os.remove(os.path.join(SHADER_SDK_BASE_DIR, 'CMakeCache.txt'))
-        except FileNotFoundError:
-            pass 
+        cmake_build_wasi_cmd = [CMAKE_EXECUTABLE,
+                '--build', WASI_BUILD_PATH
+                ]
 
-        subprocess.run(git_submodule_update_cmd)
-        subprocess.run(cmake_init_cmd)
-        subprocess.run(cmake_build_cmd)
-        subprocess.run(cmake_install_cmd)
+        #try:
+            #os.remove(BUILD_PATH)
+        #except FileNotFoundError:
+        #    pass 
 
-        os.remove(os.path.join(SHADER_SDK_BASE_DIR, 'CMakeCache.txt'))
+        subprocess.run(git_submodule_update_cmd, check=True)
+        subprocess.run(cmake_init_cmd, check=True)
+        subprocess.run(cmake_build_cmd, check=True)
+        subprocess.run(cmake_install_cmd, check=True)
 
-        subprocess.run(cmake_wasi_cmd)
-        subprocess.run(cmake_build_cmd)
+        #os.remove(BUILD_PATH)
+
+        subprocess.run(cmake_wasi_cmd, shell=True, check=True)
+        subprocess.run(cmake_build_wasi_cmd, shell=True, check=True)
 
         logging.info('Initialization done!')
