@@ -72,6 +72,7 @@ class Command():
 
         
         cmake_wasi_cmd = [CMAKE_EXECUTABLE,
+                '-G', 'Ninja',
                 '-DCMAKE_BUILD_TYPE=Release',
                 '-DCMAKE_TOOLCHAIN_FILE=' + os.path.join(WASI_PATH, 'share', 'cmake', 'wasi-sdk.cmake'),
                 '-DCMAKE_SYSROOT=' + os.path.join(WASI_PATH, 'share', 'wasi-sysroot'),

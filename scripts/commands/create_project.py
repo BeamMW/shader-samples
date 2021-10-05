@@ -25,12 +25,14 @@ class Command():
 
         logging.info('Shader %s created successfully!' % PROJECT_NAME)
 
+        BUILD_PATH = os.path.join(PROJECT_NAME, 'build', 'wasi').replace("\\", "/")
+
         cmake_build_cmd = [CMAKE_EXECUTABLE,
                 '--build',
-                PROJECT_NAME]
+                BUILD_PATH]
 
         cmake_wasi_cmd = [CMAKE_EXECUTABLE,
-                '-G "Ninja"',
+                '-G','Ninja',
                 '-DCMAKE_BUILD_TYPE=Release',
                 '-DBEAM_SHADER_SDK=' + os.environ['SHADER_SDK_BASE_DIR'].replace("\\", "/"),
                 '-DCMAKE_TOOLCHAIN_FILE=' + os.path.join(os.environ['WASI_PATH'], 'share', 'cmake', 'wasi-sdk.cmake').replace("\\", "/"),
@@ -39,7 +41,7 @@ class Command():
                 '-DCMAKE_CXX_COMPILER_FORCED=True',
                 '-DCMAKE_C_COMPILER_FORCED=True',
                 '-S' + PROJECT_NAME,
-                '-B' + PROJECT_NAME]
+                '-B' + BUILD_PATH]
 
         subprocess.run(cmake_wasi_cmd, shell=True, check=True)
-        subprocess.run(cmake_build_cmd)
+        subprocess.run(cmake_build_cmd, shell=True, check=True)
