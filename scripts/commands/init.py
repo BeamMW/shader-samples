@@ -97,8 +97,7 @@ class Command():
         subprocess.run(cmake_install_cmd, check=True)
 
         #os.remove(BUILD_PATH)
-        logging.info('Building shader lib: %s' % ','.join(cmake_wasi_cmd))
-        subprocess.run(cmake_wasi_cmd, shell=True, check=True)
-        subprocess.run(cmake_build_wasi_cmd, shell=True, check=True)
+        subprocess.run(cmake_wasi_cmd, check=True)
+        subprocess.run(cmake_build_wasi_cmd, check=True)
 
         logging.info('Initialization done!')

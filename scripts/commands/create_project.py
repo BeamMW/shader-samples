@@ -43,5 +43,5 @@ class Command():
                 '-S' + PROJECT_NAME,
                 '-B' + BUILD_PATH]
 
-        subprocess.run(cmake_wasi_cmd, shell=True, check=True)
-        subprocess.run(cmake_build_cmd, shell=True, check=True)
+        subprocess.run(cmake_wasi_cmd, check=True)
+        subprocess.run(cmake_build_cmd, check=True)
