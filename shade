@@ -1,3 +1,4 @@
 #!/bin/sh
 
-exec "python3" "scripts/manager.py" "$@"
+BASE_DIR=$(dirname "$0")
+exec "python3" "$BASE_DIR/scripts/manager.py" "$@"
