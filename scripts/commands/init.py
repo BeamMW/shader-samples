@@ -14,31 +14,33 @@ class Command():
         CMAKE_EXECUTABLE = os.environ['CMAKE_EXECUTABLE']
         GIT_EXECUTABLE = os.environ['GIT_EXECUTABLE']
 
-        if PLATFORM_NAME == 'Linux':
-            wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-linux.tar.gz'
-        elif PLATFORM_NAME == 'Darwin':
-            wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-macos.tar.gz'
-        elif PLATFORM_NAME == 'Windows':
-            wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-mingw.tar.gz'
-        else:
-            print('ERROR: Unknown system: %s' % PLATFORM_NAME)
-            sys.exit(1)
-
         logging.info('Platform: %s' % PLATFORM_NAME)
         logging.info('Beam shader-sdk path: %s' % SHADER_SDK_BASE_DIR)
         logging.info('CMake executable: %s' % CMAKE_EXECUTABLE)
         logging.info('Git executable: %s' % GIT_EXECUTABLE)
-        logging.info('Downloading wasi-sdk from %s' % wasi_url)
 
-        r = requests.get(wasi_url)
+        if not [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')]:
+            if PLATFORM_NAME == 'Linux':
+                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-linux.tar.gz'
+            elif PLATFORM_NAME == 'Darwin':
+                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-macos.tar.gz'
+            elif PLATFORM_NAME == 'Windows':
+                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-mingw.tar.gz'
+            else:
+                print('ERROR: Unknown system: %s' % PLATFORM_NAME)
+                sys.exit(1)
 
-        with open("wasi-sdk.tar.gz", "wb") as code:
-            code.write(r.content)
+            logging.info('Downloading wasi-sdk from %s' % wasi_url)
 
-        logging.info('Unpacking wasi-sdk to %s' % SHADER_SDK_BASE_DIR)
-        shutil.unpack_archive('wasi-sdk.tar.gz', SHADER_SDK_BASE_DIR)
+            r = requests.get(wasi_url)
 
-        os.remove('wasi-sdk.tar.gz')
+            with open("wasi-sdk.tar.gz", "wb") as code:
+                code.write(r.content)
+
+            logging.info('Unpacking wasi-sdk to %s' % SHADER_SDK_BASE_DIR)
+            shutil.unpack_archive('wasi-sdk.tar.gz', SHADER_SDK_BASE_DIR)
+
+            os.remove('wasi-sdk.tar.gz')
 
         WASI_PATH = os.path.join(SHADER_SDK_BASE_DIR, [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')][0]).replace("\\", "/")
 
@@ -70,7 +72,6 @@ class Command():
                 '--install',
                 HOST_BUILD_PATH]
 
-        
         cmake_wasi_cmd = [CMAKE_EXECUTABLE,
                 '-G', 'Ninja',
                 '-DCMAKE_BUILD_TYPE=Release',
