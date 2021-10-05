@@ -42,7 +42,7 @@ class Command():
 
         WASI_PATH = os.path.join(SHADER_SDK_BASE_DIR, [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')][0]).replace("\\", "/")
 
-        logging.info('Wasi path: %s' % WASI_PATH)
+        logging.info('WASI path: %s' % WASI_PATH)
 
         BUILD_PATH = os.path.join(SHADER_SDK_BASE_DIR, 'build')
         HOST_BUILD_PATH = os.path.join(BUILD_PATH, 'host')
@@ -51,7 +51,7 @@ class Command():
         git_submodule_update_cmd = [GIT_EXECUTABLE,
                 '-C', SHADER_SDK_BASE_DIR,
                 'submodule', 'update',
-                '--init', '--recursive']
+                '--init']
 
         cmake_init_cmd = [CMAKE_EXECUTABLE,
                 'CMAKE_BUILD_TYPE=Release',
@@ -97,7 +97,7 @@ class Command():
         subprocess.run(cmake_install_cmd, check=True)
 
         #os.remove(BUILD_PATH)
-
+        logging.info('Building shader lib: %s' % ','.join(cmake_wasi_cmd))
         subprocess.run(cmake_wasi_cmd, shell=True, check=True)
         subprocess.run(cmake_build_wasi_cmd, shell=True, check=True)
 
