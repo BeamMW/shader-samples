@@ -39,5 +39,8 @@ parser_create_proj.add_argument('project_name')
 
 args = parser.parse_args()
 
-command_module = SourceFileLoader(args.command_name, os.path.join(os.environ['SHADER_SDK_BASE_DIR'], 'scripts', 'commands', args.command_name + '.py')).load_module()
-command_module.Command().execute(args)
+try:
+    command_module = SourceFileLoader(args.command_name, os.path.join(os.environ['SHADER_SDK_BASE_DIR'], 'scripts', 'commands', args.command_name + '.py')).load_module()
+    command_module.Command().execute(args)
+except:
+    parser.print_help()
