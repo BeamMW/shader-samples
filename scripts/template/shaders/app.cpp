@@ -7,6 +7,11 @@
 #include <utility>
 #include <string_view>
 
+namespace %PROJECT_NAME_PLACEHOLDER%
+{
+#include "contract_sid.i"
+}
+
 using Action_func_t = void (*)(const ContractID&);
 using Actions_map_t = std::vector<std::pair<std::string_view, Action_func_t>>;
 using Roles_map_t = std::vector<std::pair<std::string_view, const Actions_map_t&>>;

@@ -3,7 +3,10 @@
 #include "Shaders/Math.h"
 #include "contract.h"
 
-BEAM_EXPORT void Ctor(%PROJECT_NAME_PLACEHOLDER%::InitialParams& params)
+
+using namespace %PROJECT_NAME_PLACEHOLDER%;
+
+BEAM_EXPORT void Ctor(InitialParams& params)
 {
 	Env::SaveVar_T(0, params);
 }
