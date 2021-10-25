@@ -56,14 +56,12 @@ class Command():
                 '--init']
 
         cmake_init_cmd = [CMAKE_EXECUTABLE,
-                'CMAKE_BUILD_TYPE=Release',
                 '-DCMAKE_INSTALL_PREFIX=' + SHADER_SDK_BASE_DIR,
                 '-S' + SHADER_SDK_BASE_DIR,
                 '-B' + HOST_BUILD_PATH]
 
         cmake_build_cmd = [CMAKE_EXECUTABLE,
                 '--build', HOST_BUILD_PATH,
-                '--config', 'Release',
                 '--target', 'generate-sid',
                 '--parallel'
                 ]
