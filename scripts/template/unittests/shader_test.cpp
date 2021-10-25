@@ -43,6 +43,12 @@ namespace Shaders {
 	//	ConvertOrd<bToShader>(x.m_hMinUpgadeDelay);
 	//}
 
+	template <bool bToShader>
+	void Convert(%PROJECT_NAME_PLACEHOLDER%::InitialParams& x)
+	{
+		// add convert order (ConvertOrd) commands for each integer type to convert byte order
+	}
+
 	namespace Contract {
 #include "../shaders/contract_sid.i"
 #include "../shaders/contract.cpp"
@@ -177,16 +183,9 @@ namespace beam {
 			bvm2::get_ShaderID(sid, m_Code.m_Contract);
 			VERIFY_ID(Shaders::Contract::s_SID, sid);
 
-			
-			Zero_ zero;
-			verify_test(ContractCreate_T(m_cid, m_Code.m_Contract, zero));
-
-
-			
-	
+			Shaders::%PROJECT_NAME_PLACEHOLDER%::InitialParams params;
+			verify_test(ContractCreate_T(m_cid, m_Code.m_Contract, params));
 		}
-
-
 	} // namespace bvm2
 } // namespace beam
 

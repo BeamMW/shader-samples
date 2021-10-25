@@ -23,7 +23,8 @@ void On_error(const char* msg)
 }
 
 template <typename T>
-auto find_if_contains(const std::string_view str, const std::vector<std::pair<std::string_view, T>>& v) {
+auto find_if_contains(const std::string_view str, const std::vector<std::pair<std::string_view, T>>& v)
+{
 	return std::find_if(v.begin(), v.end(), [&str](const auto& p) {
 		return str == p.first;
 	});
@@ -31,19 +32,19 @@ auto find_if_contains(const std::string_view str, const std::vector<std::pair<st
 
 void On_action_create_contract(const ContractID& unused)
 {
-	tester::InitialParams params;
+	%PROJECT_NAME_PLACEHOLDER%::InitialParams params;
 
-	Env::GenerateKernel(nullptr, tester::InitialParams::METHOD, &params, sizeof(params), nullptr, 0, nullptr, 0, "Create tester contract", 0);
+	Env::GenerateKernel(nullptr, %PROJECT_NAME_PLACEHOLDER%::InitialParams::METHOD, &params, sizeof(params), nullptr, 0, nullptr, 0, "Create %PROJECT_NAME_PLACEHOLDER% contract", 0);
 }
 
 void On_action_destroy_contract(const ContractID& cid)
 {
-	Env::GenerateKernel(&cid, 1, nullptr, 0, nullptr, 0, nullptr, 0, "Destroy tester contract", 0);
+	Env::GenerateKernel(&cid, 1, nullptr, 0, nullptr, 0, nullptr, 0, "Destroy %PROJECT_NAME_PLACEHOLDER% contract", 0);
 }
 
 void On_action_view_contracts(const ContractID& unused)
 {
-	EnumAndDumpContracts(tester::s_SID);
+	EnumAndDumpContracts(%PROJECT_NAME_PLACEHOLDER%::s_SID);
 }
 
 void On_action_view_contract_params(const ContractID& cid)
@@ -52,7 +53,7 @@ void On_action_view_contract_params(const ContractID& cid)
 	k.m_Prefix.m_Cid = cid;
 	k.m_KeyInContract = 0;
 
-	tester::InitialParams params;
+	%PROJECT_NAME_PLACEHOLDER%::InitialParams params;
 	if (!Env::VarReader::Read_T(k, params))
 		return On_error("Failed to read contract's initial params");
 

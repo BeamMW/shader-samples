@@ -16,12 +16,14 @@ class Command():
             logging.error('%s already exists!' % PROJECT_NAME)
             sys.exit(1)
 
-        for i in os.listdir(os.path.join(PROJECT_NAME, 'shaders')):
-            if i.endswith(('.cpp', '.h')):
-                with open(os.path.join(PROJECT_NAME, 'shaders', i), 'r') as f:
-                    buf = f.read()
-                with open(os.path.join(PROJECT_NAME, 'shaders', i), 'w') as f:
-                    f.write(buf.replace('tester', PROJECT_NAME))
+        for subDir, dirs, files in os.walk(PROJECT_NAME):
+            for fileName in files:
+                if fileName.endswith(('.cpp', '.h')):
+                    filePath = os.path.join(subDir, fileName) 
+                    with open(filePath, 'r') as f:
+                        buf = f.read()
+                    with open(filePath, 'w') as f:
+                        f.write(buf.replace('%PROJECT_NAME_PLACEHOLDER%', PROJECT_NAME))
 
         logging.info('Shader %s created successfully!' % PROJECT_NAME)
 

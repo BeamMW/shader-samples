@@ -3,7 +3,7 @@
 #include "Shaders/Math.h"
 #include "contract.h"
 
-BEAM_EXPORT void Ctor(tester::InitialParams& params)
+BEAM_EXPORT void Ctor(%PROJECT_NAME_PLACEHOLDER%::InitialParams& params)
 {
 	Env::SaveVar_T(0, params);
 }

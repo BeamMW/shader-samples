@@ -2,12 +2,14 @@
 
 #include <cstddef>
 
-namespace tester {
+namespace %PROJECT_NAME_PLACEHOLDER%
+{
 #include "contract_sid.i"
 
 #pragma pack(push, 1)
 
-	struct InitialParams {
+	struct InitialParams
+	{
 		static const uint32_t METHOD = 0;
 	};
 
