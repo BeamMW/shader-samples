@@ -5,8 +5,16 @@ if (NOT BEAM_SHADER_SDK)
     set(BEAM_SHADER_SDK $ENV{BEAM_SHADER_SDK})
 endif()
 
+if (NOT BEAM_SHADER_SDK)
+    message(FATAL_ERROR "BEAM_SHADER_SDK is not defined")
+endif()
+
 if (NOT WASI_SDK_PREFIX)
     set(WASI_SDK_PREFIX $ENV{WASI_SDK_PREFIX})
+endif()
+
+if (NOT WASI_SDK_PREFIX)
+    message(FATAL_ERROR "WASI_SDK_PREFIX is not defined")
 endif()
 
 set(CMAKE_MODULE_PATH "${BEAM_SHADER_SDK}/beam/cmake" ${CMAKE_MODULE_PATH})
