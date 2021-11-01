@@ -36,6 +36,7 @@ parser_init = subparsers.add_parser('init', help='Initialize shader-sdk. The com
 
 parser_create_proj = subparsers.add_parser('create_project', help='Create project with specified name')
 parser_create_proj.add_argument('project_name')
+parser_create_proj.add_argument('--newdir', action='store_true', help='Create new directory with project name')
 
 args = parser.parse_args()
 
