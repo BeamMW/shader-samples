@@ -46,9 +46,9 @@ class Command():
 
         logging.info('WASI path: %s' % WASI_PATH)
 
-        BUILD_PATH = os.path.join(SHADER_SDK_BASE_DIR, 'build')
-        HOST_BUILD_PATH = os.path.join(BUILD_PATH, 'host')
-        WASI_BUILD_PATH = os.path.join(BUILD_PATH, 'wasi')
+        BUILD_PATH = os.path.join(SHADER_SDK_BASE_DIR, 'build').replace("\\", "/")
+        HOST_BUILD_PATH = os.path.join(BUILD_PATH, 'host').replace("\\", "/")
+        WASI_BUILD_PATH = os.path.join(BUILD_PATH, 'wasi').replace("\\", "/")
 
         git_submodule_update_cmd = [GIT_EXECUTABLE,
                 '-C', SHADER_SDK_BASE_DIR,
