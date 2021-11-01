@@ -1,5 +1,13 @@
 cmake_minimum_required(VERSION 3.17)
-project(InitialContract)
+project(%PROJECT_NAME_PLACEHOLDER%)
+
+if (NOT BEAM_SHADER_SDK)
+    set(BEAM_SHADER_SDK $ENV{BEAM_SHADER_SDK})
+endif()
+
+if (NOT WASI_SDK_PREFIX)
+    set(WASI_SDK_PREFIX $ENV{WASI_SDK_PREFIX})
+endif()
 
 set(CMAKE_MODULE_PATH "${BEAM_SHADER_SDK}/beam/cmake" ${CMAKE_MODULE_PATH})
 set(CMAKE_MODULE_PATH "${BEAM_SHADER_SDK}/cmake" ${CMAKE_MODULE_PATH})
