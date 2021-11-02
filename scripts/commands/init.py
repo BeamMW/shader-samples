@@ -62,6 +62,7 @@ class Command():
 
         cmake_build_cmd = [CMAKE_EXECUTABLE,
                 '--build', HOST_BUILD_PATH,
+		        '--config', 'Release',		
                 '--target', 'generate-sid',
                 '--parallel'
                 ]
