@@ -62,8 +62,15 @@ class Command():
 
         cmake_build_cmd = [CMAKE_EXECUTABLE,
                 '--build', HOST_BUILD_PATH,
-		        '--config', 'Release',		
+                '--config', 'Release',		
                 '--target', 'generate-sid',
+                '--parallel'
+                ]
+        
+        cmake_build_debug_cmd = [CMAKE_EXECUTABLE,
+                '--build', HOST_BUILD_PATH,
+                '--config', 'Debug',		
+                '--target', 'bvm',
                 '--parallel'
                 ]
 
@@ -95,6 +102,7 @@ class Command():
         subprocess.run(cmake_init_cmd, check=True)
         subprocess.run(cmake_build_cmd, check=True)
         subprocess.run(cmake_install_cmd, check=True)
+        subprocess.run(cmake_build_debug_cmd, check=True)
 
         #os.remove(BUILD_PATH)
         subprocess.run(cmake_wasi_cmd, check=True)
