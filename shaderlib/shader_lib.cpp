@@ -32,6 +32,16 @@ void* operator new(std::size_t size, std::align_val_t alignment)
     return p;
 }
 
+void* operator new[](size_t size)
+{
+    return ::operator new(size);
+}
+
+void* operator new[](size_t size, std::align_val_t alignment)
+{
+    return ::operator new(size, alignment);
+}
+
 void operator delete(void* ptr) noexcept
 {
     Env::Heap_Free(ptr);
@@ -41,6 +51,17 @@ void operator delete(void* ptr, std::align_val_t) noexcept
 {
     Env::Heap_Free(ptr);
 }
+
+void operator delete[](void* ptr) noexcept
+{
+    Env::Heap_Free(ptr);
+}
+
+void operator delete[](void* ptr, std::align_val_t) noexcept
+{
+    Env::Heap_Free(ptr);
+}
+
 //
 //extern "C" void* malloc(size_t size)
 //{
