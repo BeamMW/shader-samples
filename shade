@@ -1,5 +1,12 @@
 #!/bin/sh
 
 BASE_DIR=$(dirname "$0")
-echo "python3" "$BASE_DIR/scripts/manager.py" "$@"
-exec "python3" "$BASE_DIR/scripts/manager.py" "$@"
+
+MY_PYTHON=python
+
+PYTHON3=$(which python3 2> /dev/null)
+if [$? = 0]; then
+    MY_PYTHON=$PYTHON3
+fi
+
+exec "$MY_PYTHON" "$BASE_DIR/scripts/manager.py" "$@"
