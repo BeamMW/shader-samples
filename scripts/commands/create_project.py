@@ -8,7 +8,7 @@ import distutils.dir_util
 class Command():
     def execute(self, args):
         PROJECT_NAME = args.project_name
-        PROJECT_DIR = PROJECT_NAME if args.newdir else '.'
+        PROJECT_DIR = os.path.join(os.getcwd(), PROJECT_NAME if args.newdir else '').replace("\\", "/")
         SHADER_SDK_BASE_DIR = os.environ['SHADER_SDK_BASE_DIR'].replace("\\", "/")
         CMAKE_EXECUTABLE = os.environ['CMAKE_EXECUTABLE']
 
@@ -51,6 +51,13 @@ class Command():
                 '-DCMAKE_C_COMPILER_FORCED=True',
                 '-S' + PROJECT_DIR,
                 '-B' + BUILD_PATH]
+
+        with open(os.open(os.path.join(PROJECT_DIR, 'wasi_init.sh'), os.O_CREAT | os.O_WRONLY, 0o777), 'w') as f:
+            f.write('#!/bin/sh\n')
+            f.write(' '.join(cmake_wasi_cmd))
+        with open(os.open(os.path.join(PROJECT_DIR, 'build.sh'), os.O_CREAT | os.O_WRONLY, 0o777), 'w') as f:
+            f.write('#!/bin/sh\n')
+            f.write(' '.join(cmake_build_cmd))
 
         subprocess.run(cmake_wasi_cmd, check=True)
         subprocess.run(cmake_build_cmd, check=True)
