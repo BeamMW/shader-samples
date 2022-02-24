@@ -21,11 +21,11 @@ class Command():
 
         if not [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')]:
             if PLATFORM_NAME == 'Linux':
-                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-linux.tar.gz'
+                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-14/wasi-sdk-14.0-linux.tar.gz'
             elif PLATFORM_NAME == 'Darwin':
-                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-macos.tar.gz'
+                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-14/wasi-sdk-14.0-macos.tar.gz'
             elif PLATFORM_NAME == 'Windows':
-                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-12/wasi-sdk-12.0-mingw.tar.gz'
+                wasi_url = 'https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-14/wasi-sdk-14.0-mingw.tar.gz'
             else:
                 print('ERROR: Unknown system: %s' % PLATFORM_NAME)
                 sys.exit(1)
