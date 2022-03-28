@@ -1,7 +1,7 @@
 ﻿{
   "environments": [
     { "BEAM_SHADER_SDK": "%SHADER_SDK_BASE_DIR%" },
-    { "WASI_SDK_PREFIX": "${env.BEAM_SHADER_SDK}/wasi-sdk-12.0" }
+    { "WASI_SDK_PREFIX": "${env.BEAM_SHADER_SDK}/wasi-sdk-14.0" }
   ],
   
   "configurations": [
