@@ -22,6 +22,7 @@ else()
     set(BEAM_ATOMIC_SWAP_SUPPORT FALSE)
     set(BEAM_WALLET_CLIENT_LIBRARY TRUE)
     set(BEAM_TESTS_ENABLED FALSE) 
+    set(BEAM_IPFS_SUPPORT FALSE)
     add_subdirectory(beam)
 
     # export beam targets to be able to use them from another folder
