@@ -57,6 +57,7 @@ class Command():
 
         cmake_init_cmd = [CMAKE_EXECUTABLE,
                 '-DCMAKE_INSTALL_PREFIX=' + SHADER_SDK_BASE_DIR,
+                '-DBEAM_IPFS_SUPPORT=OFF',
                 '-S' + SHADER_SDK_BASE_DIR,
                 '-B' + HOST_BUILD_PATH]
 
