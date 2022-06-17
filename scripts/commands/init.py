@@ -1,9 +1,10 @@
 import logging
 import os
-import requests
 import shutil
 import subprocess
 import sys
+import urllib.request
+
 
 class Command():
     def execute(self, args):
@@ -32,15 +33,15 @@ class Command():
 
             logging.info('Downloading wasi-sdk from %s' % wasi_url)
 
-            r = requests.get(wasi_url)
-
-            with open("wasi-sdk.tar.gz", "wb") as code:
-                code.write(r.content)
+            tmp_file = "wasi-sdk.tar.gz"
+            with urllib.request.urlopen(wasi_url) as response:
+                with open(tmp_file, 'wb') as out_file:
+                    shutil.copyfileobj(response, out_file)
 
             logging.info('Unpacking wasi-sdk to %s' % SHADER_SDK_BASE_DIR)
-            shutil.unpack_archive('wasi-sdk.tar.gz', SHADER_SDK_BASE_DIR)
+            shutil.unpack_archive(tmp_file, SHADER_SDK_BASE_DIR)
 
-            os.remove('wasi-sdk.tar.gz')
+            os.remove(tmp_file)
 
         WASI_PATH = os.path.join(SHADER_SDK_BASE_DIR, [s for s in os.listdir(SHADER_SDK_BASE_DIR) if s.startswith('wasi-sdk')][0]).replace("\\", "/")
 
