@@ -1,30 +1,46 @@
-# Shader SDK (work in progress)
-This repository contains the samples of developement of shaders for Beam.
-The aim of it is to make shaders developement more comfotable, at least for C++ developers. These samples use `wasi-sdk` which is based on `llvm libcxx`.
-`shaderlib` folder contains a small piece of code to link standard C/C++ functions to Beam Virtual Machine calls. All samples should depend on `shaderlib`.
-Finaly, `shaderlib` should became a C++ SDK for the shaders.
-
-
-# How to use
-* Install wasi-sdk from https://github.com/WebAssembly/wasi-sdk
-* Generate build script
+# Get started
+* Install `shader-sdk`, on Windows you should run these commands in `Developer Command Prompt for VS`
+```bash
+git clone https://github.com/BeamMW/shader-sdk.git
+cd shader-sdk
 ```
+On Linux and MacOS
+```bash
+./shade init
+```
+On Windows 
+```bash
+shade init
+```
+* Create envoronment valiable `BEAM_SHADER_SDK=<path to shader-sdk>`
+* Create envoronment valiable `WASI_SDK_PREFIX=<path to wasi-sdk>`. `wasi-sdk` should exist in `shader-sdk` folder after `./shade init` command completion 
+* Generate new shader project
+```bash
+mkdir new_project
+cd new_project
+<BEAM_SHADER_SDK>/shade create_project <project_name>
+```
+This script generate new project files where <project_name> is used for namespace, also it verifies that it compiles
+
+* Build project
+
+On Linux and MacOS
+```bash
 cmake -G "Ninja"
       -DCMAKE_BUILD_TYPE=Release
-      -DCMAKE_TOOLCHAIN_FILE=<PATH_TO_WASI_SDK>/share/cmake/wasi-sdk.cmake 
-      -DCMAKE_SYSROOT=<PATH_TO_WASI_SDK>/share/wasi-sysroot
-      -DWASI_SDK_PREFIX=<PATH_TO_WASI_SDK>
+      -DCMAKE_TOOLCHAIN_FILE=$WASI_SDK_PREFIX/share/cmake/wasi-sdk.cmake 
+      -DCMAKE_SYSROOT=$WASI_SDK_PREFIX/share/wasi-sysroot
+      -DWASI_SDK_PREFIX=$WASI_SDK_PREFIX
       -DCMAKE_CXX_COMPILER_FORCED=True
       -DCMAKE_C_COMPILER_FORCED=True
       .
+make
 ```
-* Add a new folder for the new shader to the `samples` directory
-* Copy the content of `TestShader` into the new folder
-* Update `samples\CMakelists.txt` file with
-```
-    add_subdirectory(<Your shader folder>)
-```
-* Please, enjoy and let me know about any problems:)
+On Window
+1. Open `new_project` folder in VS as a CMake project.
+1. Choose configuration `wasm32-Release`
+1. Build
+
 
 # Learn about shaders
 * [Overview](https://github.com/BeamMW/shader-sdk/wiki/Beam-Confidential-DeFi-Platform)
