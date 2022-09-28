@@ -54,7 +54,7 @@ class Command():
         git_submodule_update_cmd = [GIT_EXECUTABLE,
                 '-C', SHADER_SDK_BASE_DIR,
                 'submodule', 'update',
-                '--init']
+                '--init', '--recursive']
 
         cmake_init_cmd = [CMAKE_EXECUTABLE,
                 '-DCMAKE_INSTALL_PREFIX=' + SHADER_SDK_BASE_DIR,

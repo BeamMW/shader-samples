@@ -41,6 +41,7 @@ else()
             blake2b
             uv_a
             generate-sid
+            re2
         NAMESPACE Beam::
         FILE ${PROJECT_SOURCE_DIR}/cmake/Bvm.cmake)
 endif()
